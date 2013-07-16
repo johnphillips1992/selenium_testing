@@ -19,7 +19,7 @@ driver.set_window_size(1300, 900)
 def test_site(site):
     driver.get(site)
     try:
-        element = WebDriverWait(driver, 5).until(
+        WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.CLASS_NAME, "footer")))
         return True
     except:
@@ -45,7 +45,7 @@ test_site("http://payments-dev.arch.tamu.edu")
 # so we test for the table tag.
 driver.get("http://pypi-dev.arch.tamu.edu")
 try:
-    element = WebDriverWait(driver, 5).until(
+    WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.TAG_NAME, "table")))
 except:
     print "payments-dev.arch failed"
