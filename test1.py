@@ -1,8 +1,8 @@
 import os
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.support.ui import WebDriverWait # available since 2.4.0
-from selenium.webdriver.support import expected_conditions as EC # available since 2.26.0
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import time
 
@@ -48,7 +48,7 @@ test_site("http://one-dev.arch.tamu.edu")
 test_site("http://payments-dev.arch.tamu.edu")
 
 # pypi.arch does not have a footer class
-# so we test for the table tag.
+# so we test for the container and table tag.
 driver.get("http://pypi-dev.arch.tamu.edu")
 try:
     WebDriverWait(driver, 5).until(
