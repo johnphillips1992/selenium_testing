@@ -19,7 +19,8 @@ driver.set_window_size(1300, 900)
 def test_site(site):
     driver.get(site)
     try:
-        element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME, "footer")))
+        element = WebDriverWait(driver, 5).until(
+                EC.presence_of_element_located((By.CLASS_NAME, "footer")))
         return True
     except:
         print site + " failed"
@@ -40,9 +41,12 @@ test_site("http://laup-dev.arch.tamu.edu")
 test_site("http://one-dev.arch.tamu.edu")
 test_site("http://payments-dev.arch.tamu.edu")
 
+# pypi.arch does not have a footer tag
+# so we test for the table tag.
 driver.get("http://pypi-dev.arch.tamu.edu")
 try:
-    element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "table")))
+    element = WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.TAG_NAME, "table")))
 except:
     print "payments-dev.arch failed"
 
