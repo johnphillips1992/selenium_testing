@@ -56,7 +56,7 @@ try:
     WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.TAG_NAME, "table")))
 except:
-    print "payments-dev.arch failed"
+    print "pypi-dev.arch failed"
 
 test_site("http://symposium-dev.arch.tamu.edu")
 test_site("http://targetcities-dev.arch.tamu.edu")
