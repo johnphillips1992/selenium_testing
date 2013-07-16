@@ -8,12 +8,15 @@ import time
 
 start_millis = int(round(time.time() * 1000))
 
+errors = 0 
+
 # Create a new instance of the Chrome driver
 chromedriver = "./chromedriver"
 os.environ["webdriver.chrome.driver"] = chromedriver
 driver = webdriver.Chrome(chromedriver)
 
 def test_site(site):
+    global errors
     driver.get(site)
     try:
         WebDriverWait(driver, 5).until(
@@ -27,6 +30,7 @@ def test_site(site):
         return True
     except:
         print site + " failed"
+        errors = errors + 1
         return False
 
 test_site("http://myaccount-dev.arch.tamu.edu")
@@ -48,6 +52,8 @@ test_site("http://payments-dev.arch.tamu.edu")
 driver.get("http://pypi-dev.arch.tamu.edu")
 try:
     WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "container")))
+    WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.TAG_NAME, "table")))
 except:
     print "payments-dev.arch failed"
@@ -62,4 +68,6 @@ driver.quit()
 end_millis = int(round(time.time() * 1000))
 total_millis = end_millis - start_millis
 print "Test time: " + str(float(total_millis)/1000) + " seconds"
+
+print str(errors) + " errors"
 
