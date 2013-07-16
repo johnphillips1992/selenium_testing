@@ -12,39 +12,12 @@ os.environ["webdriver.chrome.driver"] = chromedriver
 driver = webdriver.Chrome(chromedriver)
 driver.set_window_size(1300, 900)
 
-driver.get("http://myaccount-dev.arch.tamu.edu")
-try:
-    element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME, "footer")))
-    time.sleep(0.5)
-
-    driver.set_window_size(800, 900)
-    time.sleep(0.5)
-
-    driver.set_window_size(300, 900)
-
-    driver.get("https://myaccount-dev.arch.tamu.edu/accounts/login/")
-    element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME, "footer")))
-
-    inputElement = driver.find_element_by_name("username")
-    inputElement.send_keys("johnphillips")
-
-    inputElement = driver.find_element_by_name("password")
-    inputElement.send_keys("Blobdoll###1")
-
-    inputElement.submit()
-    element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME, "footer")))
-
-    driver.get("https://myaccount-dev.arch.tamu.edu/accounts/logout/")
-    element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME, "footer")))
-except:
-    print "myaccount-dev.arch failed"
-
 def test_site(site):
     driver.set_window_size(1300, 900)
 
     driver.get(site)
     try:
-        element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME, "container")))
+        element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME, "footer")))
         time.sleep(1)
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(1)
@@ -60,10 +33,14 @@ def test_site(site):
         time.sleep(1)
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(1)
+        return True
 
     except:
         print site + " failed"
+        return False
 
+
+test_site("http://myaccount-dev.arch.tamu.edu")
 
 test_site("http://chc-dev.arch.tamu.edu")
 
