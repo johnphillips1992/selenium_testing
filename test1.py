@@ -5,10 +5,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import time
+import sys
 
-start_millis = int(round(time.time() * 1000))
+startMillis = int(round(time.time() * 1000))
 
-errors = 0 
+errors = 0
 
 # Create a new instance of the Chrome driver
 chromedriver = "./chromedriver"
@@ -29,7 +30,7 @@ def test_site(site):
                 EC.presence_of_element_located((By.CLASS_NAME, "footer")))
         return True
     except:
-        print site + " failed"
+        print "Error: " + site + " failed"
         errors = errors + 1
         return False
 
@@ -37,7 +38,7 @@ test_site("http://myaccount-dev.arch.tamu.edu")
 test_site("http://chc-dev.arch.tamu.edu")
 test_site("http://chsd-dev.arch.tamu.edu")
 test_site("http://chud-dev.arch.tamu.edu")
-test_site("http://colonias-dev.arch.tamu.edu")
+test_site("http://olonias-dev.arch.tamu.edu")
 test_site("http://cosc-dev.arch.tamu.edu")
 test_site("http://creativity-dev.arch.tamu.edu")
 test_site("http://crs-dev.arch.tamu.edu")
@@ -65,9 +66,12 @@ test_site("http://dev.arch.tamu.edu")
 
 driver.quit()
 
-end_millis = int(round(time.time() * 1000))
-total_millis = end_millis - start_millis
-print "Test time: " + str(float(total_millis)/1000) + " seconds"
+endMillis = int(round(time.time() * 1000))
+totalMillis = endMillis - startMillis
+print "Test time: " + str(float(totalMillis)/1000) + " seconds"
 
-print str(errors) + " errors"
+print "Total errors: " + str(errors) + " errors"
+
+if errors > 0:
+    sys.exit(2)
 
