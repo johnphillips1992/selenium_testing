@@ -49,15 +49,29 @@ def test_site(site):
         nav_height = driver.find_element_by_xpath("//div[@class='navbar " \
                     "navbar-fixed-top']").size.get('height')
 
-        if driver.get_window_size().get('width') == 1300 and nav_height != 42:
+        if width == 1300 and nav_height != 42:
             print "Error: %s failed. %s has incorrect height." % (site, 
                 'navbar')
             errors = errors + 1
 
-        if driver.get_window_size().get('width') == 800 and nav_height != 52:
+        if (width == 800 or width == 300) and nav_height != 52:
             print "Error: %s failed. %s has incorrect height." % (site, 
                 'navbar')
             errors = errors + 1
+
+        container_width = driver.find_element_by_xpath("/html/body/div" \
+                "[@class='container']").size.get('width')
+
+        if width == 1300 and container_width != 1000:
+            print "Error: %s failed. %s has incorrect width." % (site, 
+                'container')
+            errors = errors + 1
+
+        if width == 800 and container_width != 724:
+            print "Error: %s failed. %s has incorrect width." % (site, 
+                'container')
+            errors = errors + 1
+
 
         check_class("header", site)
         check_class("site-top-menu", site)
@@ -84,7 +98,16 @@ if __name__ == '__main__':
     test_site("http://laup%s.arch.tamu.edu" % dev_str)
     test_site("http://one%s.arch.tamu.edu" % dev_str)
     test_site("http://payments%s.arch.tamu.edu" % dev_str)
-    test_site("http://symposium%s.arch.tamu.edu" % dev_str)
+
+    site = "http://symposium%s.arch.tamu.edu" % dev_str
+    driver.get(site)
+    for width in [1300, 800, 300]:
+        driver.set_window_size(width, 800)
+        check_class("navbar", site)
+        check_class("header", site)
+        check_class("site-top-menu", site)
+        check_class("footer", site)
+
     test_site("http://targetcities%s.arch.tamu.edu" % dev_str)
     test_site("http://viz%s.arch.tamu.edu" % dev_str)
 
@@ -101,12 +124,27 @@ if __name__ == '__main__':
         site = "http://www.arch.tamu.edu"
 
     driver.get(site)
-    check_class("navbar", site)
-    check_class("header", site)
-    check_class("site-top-menu", site)
-    check_class("footer", site)
-    check_class("newsitems", site)
-    check_class("upcoming-events", site)
+    for width in [1300, 800, 300]:
+        driver.set_window_size(width, 800)
+        check_class("navbar", site)
+        nav_height = driver.find_element_by_xpath("//div[@class='navbar " \
+                    "navbar-fixed-top']").size.get('height')
+
+        if width == 1300 and nav_height != 42:
+            print "Error: %s failed. %s has incorrect height." % (site, 
+                'navbar')
+            errors = errors + 1
+
+        if (width == 800 or width == 300) and nav_height != 52:
+            print "Error: %s failed. %s has incorrect height." % (site, 
+                'navbar')
+            errors = errors + 1
+
+        check_class("header", site)
+        check_class("site-top-menu", site)
+        check_class("footer", site)
+        check_class("newsitems", site)
+        check_class("upcoming-events", site)
 
     driver.quit()
 
