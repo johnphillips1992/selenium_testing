@@ -37,16 +37,31 @@ def check_class(class_name, site):
                 EC.presence_of_element_located((By.CLASS_NAME, class_name)))
     except:
         print "Error: %s failed to display %s class properly." % (site, 
-                                                                  class_name)
+                class_name)
         errors = errors + 1
 
 def test_site(site):
     global errors
     driver.get(site)
-    check_class("navbar", site)
-    check_class("header", site)
-    check_class("site-top-menu", site)
-    check_class("footer", site)
+    for width in [1300, 800, 300]:
+        driver.set_window_size(width, 800)
+        check_class("navbar", site)
+        nav_height = driver.find_element_by_xpath("//div[@class='navbar " \
+                    "navbar-fixed-top']").size.get('height')
+
+        if driver.get_window_size().get('width') == 1300 and nav_height != 42:
+            print "Error: %s failed. %s has incorrect height." % (site, 
+                'navbar')
+            errors = errors + 1
+
+        if driver.get_window_size().get('width') == 800 and nav_height != 52:
+            print "Error: %s failed. %s has incorrect height." % (site, 
+                'navbar')
+            errors = errors + 1
+
+        check_class("header", site)
+        check_class("site-top-menu", site)
+        check_class("footer", site)
 
 if __name__ == '__main__':
     args = parser.parse_args()
