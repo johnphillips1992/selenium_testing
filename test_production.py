@@ -61,7 +61,47 @@ except:
 test_site("http://symposium.arch.tamu.edu")
 test_site("http://targetcities.arch.tamu.edu")
 test_site("http://viz.arch.tamu.edu")
-test_site("http://www.arch.tamu.edu")
+driver.get("http://www.arch.tamu.edu")
+try:
+    WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "navbar")))
+except:
+    print "Error: http://www.arch.tamu.edu navbar failed"
+    errors = errors + 1
+try:
+    WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "header")))
+except:
+    print "Error: http://www.arch.tamu.edu header failed"
+    errors = errors + 1
+
+try:
+    WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "site-top-menu")))
+except:
+    print "Error: http://www.arch.tamu.edu site-top-menu failed"
+    errors = errors + 1
+
+try:
+    WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "footer")))
+except:
+    print "Error: http://www.arch.tamu.edu footer failed"
+    errors = errors +1
+
+try:
+    WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "newsitems")))
+except:
+    print "Error: http://www.arch.tamu.edu newsitems failed"
+    errors = errors +1
+
+try:
+    WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "upcoming-events")))
+except:
+    print "Error: http://www.arch.tamu.edu upcoming events failed"
+    errors = errors +1
 
 driver.quit()
 
