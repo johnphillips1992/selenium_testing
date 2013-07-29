@@ -13,3 +13,7 @@ V1.2
 ----------------
  - Testing for more elements.
  - Exit code of 2 for failed tests. 
+
+V2
+----------------
+ - Added command line argument and more testing for www.arch
