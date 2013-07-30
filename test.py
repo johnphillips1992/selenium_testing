@@ -9,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
-parser = ArgumentParser(description='Set the environment to test')
+parser = ArgumentParser(description='Specify staging environment.')
 parser.add_argument('-s', '--staging', action='store_true')
 
 startMillis = int(round(time.time() * 1000))
@@ -26,8 +26,9 @@ def check_tag(tag_name, site):
     try:
         WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.TAG_NAME, tag_name)))
-    except:
+    except Exception as e:
         print "Error: %s failed to display %s tag properly." % (site, tag_name)
+        print e
         errors = errors + 1
 
 def check_class(class_name, site):
@@ -35,51 +36,54 @@ def check_class(class_name, site):
     try:
         WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.CLASS_NAME, class_name)))
-    except:
+    except Exception as e:
         print "Error: %s failed to display %s class properly." % (site, 
                 class_name)
+        print e
         errors = errors + 1
+
+def check_element(site, width, element, dimension, large, small):
+    try:
+        element_dimension = driver.find_element_by_xpath(element).size.get(dimension)
+
+        if width == 1300 and element_dimension != large:
+            print "Error: %s failed. %s has incorrect %s" % (site, 
+                element, dimension)
+            errors = errors + 1
+
+        if width == 800 and element_dimension != small:
+            print "Error: %s failed. %s has incorrect %s" % (site, 
+                element, dimension)
+            errors = errors + 1
+    except Exception as e:
+        print "Error %s failed to check %s" % (site, element)
+        print e
 
 def test_site(site):
     global errors
     driver.get(site)
-    for width in [1300, 800, 300]:
-        driver.set_window_size(width, 800)
-        check_class("navbar", site)
-        nav_height = driver.find_element_by_xpath("//div[@class='navbar " \
-                "navbar-fixed-top']").size.get('height')
+    try:
+        for width in [1300, 800, 300]:
+            driver.set_window_size(width, 800)
+            check_class("navbar", site)
 
-        if width == 1300 and nav_height != 42:
-            print "Error: %s failed. %s has incorrect height." % (site, 
-                'navbar')
-            errors = errors + 1
+            check_element(site, width, "//div[@class='navbar navbar-fixed-top']",
+                    'height', 42, 52)
 
-        if (width == 800 or width == 300) and nav_height != 52:
-            print "Error: %s failed. %s has incorrect height." % (site, 
-                'navbar')
-            errors = errors + 1
+            if 'one' in site:
+                check_element(site, width, "/html/body/div[@class='container']",
+                        'width', 990, 724)
+            else:
+                check_element(site, width, "/html/body/div[@class='container']",
+                        'width', 1000, 724)
 
-        container_width = driver.find_element_by_xpath("/html/body/div" \
-                "[@class='container']").size.get('width')
-        if 'one' in site:
-            if width == 1300 and container_width != 990:
-                print "Error: %s failed. %s has incorrect width." % (site, 
-                    'container')
-                errors = errors + 1
-        else:
-            if width == 1300 and container_width != 1000:
-                print "Error: %s failed. %s has incorrect width." % (site, 
-                    'container')
-                errors = errors + 1
-
-        if width == 800 and container_width != 724:
-            print "Error: %s failed. %s has incorrect width." % (site, 
-                'container')
-            errors = errors + 1
-
-        check_class("header", site)
-        check_class("site-top-menu", site)
-        check_class("footer", site)
+            check_class("header", site)
+            check_class("site-top-menu", site)
+            check_class("footer", site)
+    except Exception as e:
+        print "Error: %s faild." % site
+        print e
+        errors = errors + 1
 
 if __name__ == '__main__':
     args = parser.parse_args()
@@ -131,61 +135,28 @@ if __name__ == '__main__':
         for width in [1300, 800, 300]:
             driver.set_window_size(width, 800)
             check_class("navbar", site)
-            nav_height = driver.find_element_by_xpath("//div[@class='navbar " \
-                    "navbar-fixed-top']").size.get('height')
 
-            if width == 1300 and nav_height != 42:
-                print "Error: %s failed. %s has incorrect height." % (site, 
-                    'navbar')
-                errors = errors + 1
+            check_element(site, width, "//div[@class='navbar navbar-fixed-top']",
+                    'height', 42, 52)
 
-            if (width == 800 or width == 300) and nav_height != 52:
-                print "Error: %s failed. %s has incorrect height." % (site, 
-                    'navbar')
-                errors = errors + 1
+            check_element(site, width, "/html/body/div[@class='container']",
+                    'width', 1000, 724)
 
-            container_width = driver.find_element_by_xpath("/html/body/div" \
-                    "[@class='container']").size.get('width')
-            if width == 1300 and container_width != 1000:
-                print "Error: %s failed. %s has incorrect width." % (site, 
-                    'container')
-                errors = errors + 1
+            check_element(site, width, "//div[@class='newsitems']",
+                    'width', 660, 476)
 
+            check_element(site, width, "//div[@class='upcoming-events']",
+                    'width', 300, 208)
 
-            if width == 800 and container_width != 724:
-                print "Error: %s failed. %s has incorrect width." % (site, 
-                    'container')
-                errors = errors + 1
-
-            newsitems_width = driver.find_element_by_xpath("//div[" \
-                    "@class='newsitems']").size.get('width')
-            if width == 1300 and newsitems_width != 660:
-                print "Error: %s failed. %s has incorrect width." % (site, 
-                    'newsitems')
-                errors = errors + 1
-
-            if width == 800 and newsitems_width != 476:
-                print "Error: %s failed. %s has incorrect width." % (site, 
-                    'newsitems')
-                errors = errors + 1
-
-            upcomingevents_width = driver.find_element_by_xpath("//div[" \
-                    "@class='upcoming-events']").size.get('width')
-            if width == 1300 and upcomingevents_width != 300:
-                print "Error: %s failed. %s has incorrect width." % (site, 
-                    'upcoming-events')
-                errors = errors + 1
-
-            if width == 800 and upcomingevents_width != 208:
-                print "Error: %s failed. %s has incorrect width." % (site, 
-                    'upcoming-events')
-                errors = errors + 1
+            check_element(site, width, "//div[@class='banner span12']",
+                    'height', 309, 228)
 
             check_class("header", site)
             check_class("site-top-menu", site)
             check_class("footer", site)
             check_class("newsitems", site)
             check_class("upcoming-events", site)
+
     except Exception as e:
         print "Error: %s failed." % (site)
         print e
