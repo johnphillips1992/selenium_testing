@@ -61,11 +61,17 @@ def test_site(site):
 
         container_width = driver.find_element_by_xpath("/html/body/div" \
                 "[@class='container']").size.get('width')
+        if 'one' in site:
+            if width == 1300 and container_width != 990:
+                print "Error: %s failed. %s has incorrect width." % (site, 
+                    'container')
+                errors = errors + 1
+        else:
+            if width == 1300 and container_width != 1000:
+                print "Error: %s failed. %s has incorrect width." % (site, 
+                    'container')
+                errors = errors + 1
 
-        if width == 1300 and container_width != 1000:
-            print "Error: %s failed. %s has incorrect width." % (site, 
-                'container')
-            errors = errors + 1
 
         if width == 800 and container_width != 724:
             print "Error: %s failed. %s has incorrect width." % (site, 
@@ -139,6 +145,20 @@ if __name__ == '__main__':
             print "Error: %s failed. %s has incorrect height." % (site, 
                 'navbar')
             errors = errors + 1
+
+        container_width = driver.find_element_by_xpath("/html/body/div" \
+                "[@class='container']").size.get('width')
+        if width == 1300 and container_width != 1000:
+            print "Error: %s failed. %s has incorrect width." % (site, 
+                'container')
+            errors = errors + 1
+
+
+        if width == 800 and container_width != 724:
+            print "Error: %s failed. %s has incorrect width." % (site, 
+                'container')
+            errors = errors + 1
+
 
         check_class("header", site)
         check_class("site-top-menu", site)
