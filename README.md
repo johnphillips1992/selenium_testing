@@ -17,3 +17,8 @@ V1.2
 V2
 ----------------
  - Added command line argument and more testing for www.arch
+
+V2.1
+----------------
+ - Added test of the 404 search box.
+ - Cleaned up code on general test.
