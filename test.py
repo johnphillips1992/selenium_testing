@@ -47,7 +47,7 @@ def test_site(site):
         driver.set_window_size(width, 800)
         check_class("navbar", site)
         nav_height = driver.find_element_by_xpath("//div[@class='navbar " \
-                    "navbar-fixed-top']").size.get('height')
+                "navbar-fixed-top']").size.get('height')
 
         if width == 1300 and nav_height != 42:
             print "Error: %s failed. %s has incorrect height." % (site, 
@@ -72,12 +72,10 @@ def test_site(site):
                     'container')
                 errors = errors + 1
 
-
         if width == 800 and container_width != 724:
             print "Error: %s failed. %s has incorrect width." % (site, 
                 'container')
             errors = errors + 1
-
 
         check_class("header", site)
         check_class("site-top-menu", site)
@@ -171,14 +169,26 @@ if __name__ == '__main__':
                     'newsitems')
                 errors = errors + 1
 
+            upcomingevents_width = driver.find_element_by_xpath("//div[" \
+                    "@class='upcoming-events']").size.get('width')
+            if width == 1300 and upcomingevents_width != 300:
+                print "Error: %s failed. %s has incorrect width." % (site, 
+                    'upcoming-events')
+                errors = errors + 1
+
+            if width == 800 and upcomingevents_width != 208:
+                print "Error: %s failed. %s has incorrect width." % (site, 
+                    'upcoming-events')
+                errors = errors + 1
 
             check_class("header", site)
             check_class("site-top-menu", site)
             check_class("footer", site)
             check_class("newsitems", site)
             check_class("upcoming-events", site)
-    except:
+    except Exception as e:
         print "Error: %s failed." % (site)
+        print e
         errors = errors + 1
 
     driver.quit()
