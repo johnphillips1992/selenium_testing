@@ -21,30 +21,37 @@ chromedriver = "./chromedriver"
 os.environ["webdriver.chrome.driver"] = chromedriver
 driver = webdriver.Chrome(chromedriver)
 
-driver.get("http://www.arch.tamu.edu/this/is/a/test/")
+if __name__ == '__main__':
+    if args.staging:
+        site = "http://dev.arch.tamu.edu/this/is/a/test/"
+    else:
+        site = "http://www.arch.tamu.edu/this/is/a/test/"
 
-try:
-    search_box = driver.find_element_by_xpath("//form[@id='google_404']/p/input[@name='q']")
+    driver.get(site)
 
-    text = search_box.get_attribute('value')
+    try:
+        search_box = driver.find_element_by_xpath("//form[@id='google_404']/p/" \
+                "input[@name='q']")
 
-    if text != " this is a test ":
+        text = search_box.get_attribute('value')
+
+        if text != " this is a test ":
+            errors = errors + 1
+            print "Error: Search box does not contain the correct text."
+
+    except Exception as e:
+        print "Error: Could not complete the test."
+        print e
         errors = errors + 1
-        print "Error: Search box does not contain the correct text."
 
-except Exception as e:
-    print "Error: Could not complet the test."
-    print e
+    driver.quit()
 
-driver.quit()
+    endMillis = int(round(time.time() * 1000))
+    totalMillis = endMillis - startMillis
+    print "Test time: " + str(float(totalMillis)/1000) + " seconds"
 
-endMillis = int(round(time.time() * 1000))
-totalMillis = endMillis - startMillis
-print "Test time: " + str(float(totalMillis)/1000) + " seconds"
+    print "Total errors: " + str(errors) + " errors"
 
-print "Total errors: " + str(errors) + " errors"
-
-
-if errors > 0:
-    sys.exit(2)
+    if errors > 0:
+        sys.exit(2)
 
