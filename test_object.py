@@ -59,9 +59,9 @@ class Test():
     driver = None
 
     def __init__(self, driver):
-        self.set_driver(driver)
+        self.open_browser(driver)
 
-    def set_driver(self, driver):
+    def open_browser(self, driver):
         if self.driver != None:
             self.driver.quit()
         if driver == "chrome":
@@ -75,7 +75,7 @@ class Test():
         if driver == "safari":
             self.driver = webdriver.SafariDriver()
         if driver == "opera":
-
+            os.environ["SELENIUM_SERVER_JAR"] = "./selenium-server-standalone-2.33.0.jar"
             self.driver = webdriver.Opera()
         print "Driver set to %s" % self.driver
 
@@ -86,41 +86,43 @@ class Test():
         try:
             for width in [1300, 800, 300]:
                 self.driver.set_window_size(width, 800)
-                if "pypi" not in site and "symposium" not in site:
-                    check_element(self, self.driver, site, width, 
-                            "//div[@class='navbar navbar-fixed-top']", 'height', 
-                            42, 52)
-
-                    if 'one' in site:
-                        check_element(self, self.driver, site, width, 
-                                "/html/body/div[@class='container']", 'width', 
-                                990, 724)
-                    else:
-                        check_element(self, self.driver, site, width, 
-                                "/html/body/div[@class='container']", 'width', 
-                                1000, 724)
-
-                    if site == "http://dev.arch.tamu.edu":
-                        check_element(self, self.driver, site, width, 
-                                "//div[@class='newsitems']", 'width', 
-                                660, 476)
-                        check_element(self, self.driver, site, width, 
-                                "//div[@class='upcoming-events']", 'width', 
-                                300, 208)
-                        check_element(self, self.driver, site, width, 
-                                "//div[@class='banner span12']", 'height', 
-                                309, 228)
-                        check_class(self, self.driver, "newsitems", site)
-                        check_class(self, self.driver, "upcoming-events", site)
                 if "symposium" in site:
                     check_class(self, self.driver, "navbar", site)
                     check_class(self, self.driver, "header", site)
                     check_class(self, self.driver, "site-top-menu", site)
                     check_class(self, self.driver, "footer", site)
+                    continue
                 if "pypi" in site:
                     self.driver.get(site)
                     check_class(self, self.driver, "container", site)
                     check_tag(self, self.driver, "table", site)
+                    continue
+
+                check_element(self, self.driver, site, width, 
+                        "//div[@class='navbar navbar-fixed-top']", 'height', 
+                        42, 52)
+
+                if 'one' in site:
+                    check_element(self, self.driver, site, width, 
+                            "/html/body/div[@class='container']", 'width', 
+                            990, 724)
+                else:
+                    check_element(self, self.driver, site, width, 
+                            "/html/body/div[@class='container']", 'width', 
+                            1000, 724)
+
+                if site == "http://dev.arch.tamu.edu":
+                    check_element(self, self.driver, site, width, 
+                            "//div[@class='newsitems']", 'width', 
+                            660, 476)
+                    check_element(self, self.driver, site, width, 
+                            "//div[@class='upcoming-events']", 'width', 
+                            300, 208)
+                    check_element(self, self.driver, site, width, 
+                            "//div[@class='banner span12']", 'height', 
+                            309, 228)
+                    check_class(self, self.driver, "newsitems", site)
+                    check_class(self, self.driver, "upcoming-events", site)
 
         except Exception as e:
             print "Error: %s faild." % site
@@ -151,3 +153,8 @@ class Test():
     def end(self):
         self.driver.quit()
         self.driver = None
+
+    def quit(self):
+        if self.driver:
+            self.driver.quit()
+        sys.exit()
