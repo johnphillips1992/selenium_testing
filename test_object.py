@@ -58,7 +58,7 @@ def check_element(instance, driver, site, width, element, dimension, large,
 class Test():
     driver = None
 
-    def __init__(self, driver):
+    def __init__(self, driver="chrome"):
         self.open_browser(driver)
 
     def open_browser(self, driver):
@@ -111,7 +111,8 @@ class Test():
                             "/html/body/div[@class='container']", 'width', 
                             1000, 724)
 
-                if site == "http://dev.arch.tamu.edu":
+                if site == "http://dev.arch.tamu.edu" or \
+                    site == "http://www.arch.tamu.edu":
                     check_element(self, self.driver, site, width, 
                             "//div[@class='newsitems']", 'width', 
                             660, 476)
@@ -130,25 +131,45 @@ class Test():
             self.end()
             sys.exit(2)
 
-    def test_all_sites(self):
-        self.test_site("http://myaccount-dev.arch.tamu.edu")
-        self.test_site("http://chc-dev.arch.tamu.edu")
-        self.test_site("http://chsd-dev.arch.tamu.edu")
-        self.test_site("http://chud-dev.arch.tamu.edu")
-        self.test_site("http://colonias-dev.arch.tamu.edu")
-        self.test_site("http://cosc-dev.arch.tamu.edu")
-        self.test_site("http://creativity-dev.arch.tamu.edu")
-        self.test_site("http://crs-dev.arch.tamu.edu")
-        self.test_site("http://dept-dev.arch.tamu.edu")
-        self.test_site("http://hrrc-dev.arch.tamu.edu")
-        self.test_site("http://laup-dev.arch.tamu.edu")
-        self.test_site("http://one-dev.arch.tamu.edu")
-        self.test_site("http://payments-dev.arch.tamu.edu")
-        self.test_site("http://targetcities-dev.arch.tamu.edu")
-        self.test_site("http://viz-dev.arch.tamu.edu")
-        self.test_site("http://dev.arch.tamu.edu")
-        self.test_site("http://pypi-dev.arch.tamu.edu")
-        self.test_site("http://symposium-dev.arch.tamu.edu")
+    def test_all_sites(self, environment="staging"):
+        if(environment == "staging"):
+            self.test_site("http://myaccount-dev.arch.tamu.edu")
+            self.test_site("http://chc-dev.arch.tamu.edu")
+            self.test_site("http://chsd-dev.arch.tamu.edu")
+            self.test_site("http://chud-dev.arch.tamu.edu")
+            self.test_site("http://colonias-dev.arch.tamu.edu")
+            self.test_site("http://cosc-dev.arch.tamu.edu")
+            self.test_site("http://creativity-dev.arch.tamu.edu")
+            self.test_site("http://crs-dev.arch.tamu.edu")
+            self.test_site("http://dept-dev.arch.tamu.edu")
+            self.test_site("http://hrrc-dev.arch.tamu.edu")
+            self.test_site("http://laup-dev.arch.tamu.edu")
+            self.test_site("http://one-dev.arch.tamu.edu")
+            self.test_site("http://payments-dev.arch.tamu.edu")
+            self.test_site("http://targetcities-dev.arch.tamu.edu")
+            self.test_site("http://viz-dev.arch.tamu.edu")
+            self.test_site("http://dev.arch.tamu.edu")
+            self.test_site("http://pypi-dev.arch.tamu.edu")
+            self.test_site("http://symposium-dev.arch.tamu.edu")
+        if(environment == "production"):
+            self.test_site("http://myaccount.arch.tamu.edu")
+            self.test_site("http://chc.arch.tamu.edu")
+            self.test_site("http://chsd.arch.tamu.edu")
+            self.test_site("http://chud.arch.tamu.edu")
+            self.test_site("http://colonias.arch.tamu.edu")
+            self.test_site("http://cosc.arch.tamu.edu")
+            self.test_site("http://creativity.arch.tamu.edu")
+            self.test_site("http://crs.arch.tamu.edu")
+            self.test_site("http://dept.arch.tamu.edu")
+            self.test_site("http://hrrc.arch.tamu.edu")
+            self.test_site("http://laup.arch.tamu.edu")
+            self.test_site("http://one.arch.tamu.edu")
+            self.test_site("http://payments.arch.tamu.edu")
+            self.test_site("http://targetcities.arch.tamu.edu")
+            self.test_site("http://viz.arch.tamu.edu")
+            self.test_site("http://www.arch.tamu.edu")
+            self.test_site("http://pypi.arch.tamu.edu")
+            self.test_site("http://symposium.arch.tamu.edu")
 
     def end(self):
         self.driver.quit()
