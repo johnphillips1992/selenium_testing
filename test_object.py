@@ -79,8 +79,10 @@ class Test():
             self.driver = webdriver.Opera()
         print "Driver set to %s" % self.driver
 
-    def test_site(self, site):
+    def test_site(self, site=None):
         global errors
+        if site is None:
+            site = self.driver.current_url
         print "Testing: %s" % site
         self.driver.get(site)
         try:
