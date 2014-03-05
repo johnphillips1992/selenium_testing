@@ -11,6 +11,55 @@ from selenium.webdriver.common.by import By
 
 errors = 0
 
+PRODUCTION_SITES = [
+            "http://myaccount.arch.tamu.edu",
+            "http://chc.arch.tamu.edu",
+            "http://chsd.arch.tamu.edu",
+            "http://chud.arch.tamu.edu",
+            "http://colonias.arch.tamu.edu",
+            "http://cosc.arch.tamu.edu",
+            "http://creativity.arch.tamu.edu",
+            "http://crs.arch.tamu.edu",
+            "http://dept.arch.tamu.edu",
+            "http://hrrc.arch.tamu.edu",
+            "http://laup.arch.tamu.edu",
+            "http://one.arch.tamu.edu",
+            "http://targetcities.arch.tamu.edu",
+            "http://viz.arch.tamu.edu",
+            "http://www.arch.tamu.edu",
+            "http://pypi.arch.tamu.edu",
+            "http://symposium.arch.tamu.edu",
+            "http://fablab.arch.tamu.edu",
+            "http://vizeval.arch.tamu.edu",
+            "http://coastalatlas.arch.tamu.edu",
+            "http://grandchallenge.tamu.edu"
+]
+
+STAGING_SITES = [
+            "http://myaccount-dev.arch.tamu.edu",
+            "http://chc-dev.arch.tamu.edu",
+            "http://chsd-dev.arch.tamu.edu",
+            "http://chud-dev.arch.tamu.edu",
+            "http://colonias-dev.arch.tamu.edu",
+            "http://cosc-dev.arch.tamu.edu",
+            "http://creativity-dev.arch.tamu.edu",
+            "http://crs-dev.arch.tamu.edu",
+            "http://dept-dev.arch.tamu.edu",
+            "http://hrrc-dev.arch.tamu.edu",
+            "http://laup-dev.arch.tamu.edu",
+            "http://one-dev.arch.tamu.edu",
+            "http://targetcities-dev.arch.tamu.edu",
+            "http://viz-dev.arch.tamu.edu",
+            "http://dev.arch.tamu.edu",
+            "http://pypi-dev.arch.tamu.edu",
+            "http://symposium-dev.arch.tamu.edu",
+            "http://fablab-dev.arch.tamu.edu",
+            "http://vizeval-dev.arch.tamu.edu",
+            "http://coastalatlas-dev.arch.tamu.edu",
+            "http://grandchallenge-dev.tamu.edu"
+]
+
+
 def check_tag(instance, driver, tag_name, site):
     global errors
     try:
@@ -59,7 +108,16 @@ class Test():
     driver = None
 
     def __init__(self, driver="chrome"):
-        self.open_browser(driver)
+        try:
+            self.open_browser(driver)
+        except:
+            pass
+
+    def test_print(self):
+        s = 'yoyo'\
+            'oyoyoy'\
+            'uiio'
+        print s
 
     def open_browser(self, driver):
         if self.driver != None:
@@ -135,44 +193,11 @@ class Test():
 
     def test_all_sites(self, environment="staging"):
         if(environment == "staging"):
-            self.test_site("http://myaccount-dev.arch.tamu.edu")
-            self.test_site("http://chc-dev.arch.tamu.edu")
-            self.test_site("http://chsd-dev.arch.tamu.edu")
-            self.test_site("http://chud-dev.arch.tamu.edu")
-            self.test_site("http://colonias-dev.arch.tamu.edu")
-            self.test_site("http://cosc-dev.arch.tamu.edu")
-            self.test_site("http://creativity-dev.arch.tamu.edu")
-            self.test_site("http://crs-dev.arch.tamu.edu")
-            self.test_site("http://dept-dev.arch.tamu.edu")
-            self.test_site("http://hrrc-dev.arch.tamu.edu")
-            self.test_site("http://laup-dev.arch.tamu.edu")
-            self.test_site("http://one-dev.arch.tamu.edu")
-            self.test_site("http://payments-dev.arch.tamu.edu")
-            self.test_site("http://targetcities-dev.arch.tamu.edu")
-            self.test_site("http://viz-dev.arch.tamu.edu")
-            self.test_site("http://dev.arch.tamu.edu")
-            self.test_site("http://pypi-dev.arch.tamu.edu")
-            self.test_site("http://symposium-dev.arch.tamu.edu")
+            for site in STAGING_SITES:
+                self.test_site(site)
         if(environment == "production"):
-            self.test_site("http://myaccount.arch.tamu.edu")
-            self.test_site("http://chc.arch.tamu.edu")
-            self.test_site("http://chsd.arch.tamu.edu")
-            self.test_site("http://chud.arch.tamu.edu")
-            self.test_site("http://colonias.arch.tamu.edu")
-            self.test_site("http://cosc.arch.tamu.edu")
-            self.test_site("http://creativity.arch.tamu.edu")
-            self.test_site("http://crs.arch.tamu.edu")
-            self.test_site("http://dept.arch.tamu.edu")
-            self.test_site("http://hrrc.arch.tamu.edu")
-            self.test_site("http://laup.arch.tamu.edu")
-            self.test_site("http://one.arch.tamu.edu")
-            self.test_site("http://payments.arch.tamu.edu")
-            self.test_site("http://targetcities.arch.tamu.edu")
-            self.test_site("http://viz.arch.tamu.edu")
-            self.test_site("http://www.arch.tamu.edu")
-            self.test_site("http://pypi.arch.tamu.edu")
-            self.test_site("http://symposium.arch.tamu.edu")
-
+            for site in PRODUCTION_SITES:
+                self.test_site(site)
     def end(self):
         self.driver.quit()
         self.driver = None
