@@ -12,51 +12,51 @@ from selenium.webdriver.common.by import By
 errors = 0
 
 PRODUCTION_SITES = [
-            "http://myaccount.arch.tamu.edu",
-            "http://chc.arch.tamu.edu",
-            "http://chsd.arch.tamu.edu",
-            "http://chud.arch.tamu.edu",
-            "http://colonias.arch.tamu.edu",
-            "http://cosc.arch.tamu.edu",
-            "http://creativity.arch.tamu.edu",
-            "http://crs.arch.tamu.edu",
-            "http://dept.arch.tamu.edu",
-            "http://hrrc.arch.tamu.edu",
-            "http://laup.arch.tamu.edu",
-            "http://one.arch.tamu.edu",
-            "http://targetcities.arch.tamu.edu",
-            "http://viz.arch.tamu.edu",
-            "http://www.arch.tamu.edu",
-            "http://pypi.arch.tamu.edu",
-            "http://symposium.arch.tamu.edu",
-            "http://fablab.arch.tamu.edu",
-            "http://vizeval.arch.tamu.edu",
-            "http://coastalatlas.arch.tamu.edu",
-            "http://grandchallenge.tamu.edu"
+    "http://myaccount.arch.tamu.edu",
+    "http://chc.arch.tamu.edu",
+    "http://chsd.arch.tamu.edu",
+    "http://chud.arch.tamu.edu",
+    "http://colonias.arch.tamu.edu",
+    "http://cosc.arch.tamu.edu",
+    "http://creativity.arch.tamu.edu",
+    "http://crs.arch.tamu.edu",
+    "http://dept.arch.tamu.edu",
+    "http://hrrc.arch.tamu.edu",
+    "http://laup.arch.tamu.edu",
+    "http://one.arch.tamu.edu",
+    "http://targetcities.arch.tamu.edu",
+    "http://viz.arch.tamu.edu",
+    "http://www.arch.tamu.edu",
+    "http://pypi.arch.tamu.edu",
+    "http://symposium.arch.tamu.edu",
+    "http://fablab.arch.tamu.edu",
+    "http://vizeval.arch.tamu.edu",
+    "http://coastalatlas.arch.tamu.edu",
+    "http://grandchallenge.tamu.edu"
 ]
 
 STAGING_SITES = [
-            "http://myaccount-dev.arch.tamu.edu",
-            "http://chc-dev.arch.tamu.edu",
-            "http://chsd-dev.arch.tamu.edu",
-            "http://chud-dev.arch.tamu.edu",
-            "http://colonias-dev.arch.tamu.edu",
-            "http://cosc-dev.arch.tamu.edu",
-            "http://creativity-dev.arch.tamu.edu",
-            "http://crs-dev.arch.tamu.edu",
-            "http://dept-dev.arch.tamu.edu",
-            "http://hrrc-dev.arch.tamu.edu",
-            "http://laup-dev.arch.tamu.edu",
-            "http://one-dev.arch.tamu.edu",
-            "http://targetcities-dev.arch.tamu.edu",
-            "http://viz-dev.arch.tamu.edu",
-            "http://dev.arch.tamu.edu",
-            "http://pypi-dev.arch.tamu.edu",
-            "http://symposium-dev.arch.tamu.edu",
-            "http://fablab-dev.arch.tamu.edu",
-            "http://vizeval-dev.arch.tamu.edu",
-            "http://coastalatlas-dev.arch.tamu.edu",
-            "http://grandchallenge-dev.tamu.edu"
+    "https://myaccount-dev.arch.tamu.edu",
+    "https://chc-dev.arch.tamu.edu",
+    "https://chsd-dev.arch.tamu.edu",
+    "https://chud-dev.arch.tamu.edu",
+    "https://colonias-dev.arch.tamu.edu",
+    "https://cosc-dev.arch.tamu.edu",
+    "https://creativity-dev.arch.tamu.edu",
+    "https://crs-dev.arch.tamu.edu",
+    "https://dept-dev.arch.tamu.edu",
+    "https://hrrc-dev.arch.tamu.edu",
+    "https://laup-dev.arch.tamu.edu",
+    "https://one-dev.arch.tamu.edu",
+    "https://targetcities-dev.arch.tamu.edu",
+    "https://viz-dev.arch.tamu.edu",
+    "https://dev.arch.tamu.edu",
+    "https://pypi-dev.arch.tamu.edu",
+    "https://symposium-dev.arch.tamu.edu",
+    "https://fablab-dev.arch.tamu.edu",
+    "https://vizeval-dev.arch.tamu.edu",
+    "https://coastalatlas-dev.arch.tamu.edu",
+    "https://grandchallenge-dev.tamu.edu"
 ]
 
 
@@ -77,25 +77,25 @@ def check_class(instance, driver, class_name, site):
         WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.CLASS_NAME, class_name)))
     except Exception as e:
-        print "Error: %s failed to display %s class properly." % (site, 
+        print "Error: %s failed to display %s class properly." % (site,
                 class_name)
         print e
         instance.end()
         sys.exit(2)
 
-def check_element(instance, driver, site, width, element, dimension, large, 
+def check_element(instance, driver, site, width, element, dimension, large,
         small):
     try:
         element_dimension = driver.find_element_by_xpath(element).\
                 size.get(dimension)
 
         if width == 1300 and element_dimension != large:
-            print "Error: %s failed. %s has incorrect %s" % (site, 
+            print "Error: %s failed. %s has incorrect %s" % (site,
                 element, dimension)
             raise
 
         if width == 800 and element_dimension != small:
-            print "Error: %s failed. %s has incorrect %s" % (site, 
+            print "Error: %s failed. %s has incorrect %s" % (site,
                 element, dimension)
             raise
     except Exception as e:
@@ -112,12 +112,6 @@ class Test():
             self.open_browser(driver)
         except:
             pass
-
-    def test_print(self):
-        s = 'yoyo'\
-            'oyoyoy'\
-            'uiio'
-        print s
 
     def open_browser(self, driver):
         if self.driver != None:
@@ -159,28 +153,28 @@ class Test():
                     continue
 
                 check_element(self, self.driver, site, width, 
-                        "//div[@class='navbar navbar-fixed-top']", 'height', 
+                        "//div[@class='navbar navbar-fixed-top']", 'height',
                         42, 52)
 
                 if 'one' in site:
                     check_element(self, self.driver, site, width, 
-                            "/html/body/div[@class='container']", 'width', 
+                            "/html/body/div[@class='container']", 'width',
                             990, 724)
                 else:
                     check_element(self, self.driver, site, width, 
-                            "/html/body/div[@class='container']", 'width', 
+                            "/html/body/div[@class='container']", 'width',
                             1000, 724)
 
                 if site == "http://dev.arch.tamu.edu" or \
                     site == "http://www.arch.tamu.edu":
-                    check_element(self, self.driver, site, width, 
-                            "//div[@class='newsitems']", 'width', 
+                    check_element(self, self.driver, site, width,
+                            "//div[@class='newsitems']", 'width',
                             660, 476)
-                    check_element(self, self.driver, site, width, 
-                            "//div[@class='upcoming-events']", 'width', 
+                    check_element(self, self.driver, site, width,
+                            "//div[@class='upcoming-events']", 'width',
                             300, 208)
                     check_element(self, self.driver, site, width, 
-                            "//div[@class='banner span12']", 'height', 
+                            "//div[@class='banner span12']", 'height',
                             309, 228)
                     check_class(self, self.driver, "newsitems", site)
                     check_class(self, self.driver, "upcoming-events", site)
@@ -188,8 +182,7 @@ class Test():
         except Exception as e:
             print "Error: %s faild." % site
             print e
-            self.end()
-            sys.exit(2)
+            pass
 
     def test_all_sites(self, environment="staging"):
         if(environment == "staging"):
@@ -206,3 +199,4 @@ class Test():
         if self.driver:
             self.driver.quit()
         sys.exit()
+
