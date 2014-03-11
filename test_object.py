@@ -68,8 +68,6 @@ def check_tag(instance, driver, tag_name, site):
     except Exception as e:
         print "Error: %s failed to display %s tag properly." % (site, tag_name)
         print e
-        instance.end()
-        sys.exit(2)
 
 def check_class(instance, driver, class_name, site):
     global errors
@@ -80,8 +78,6 @@ def check_class(instance, driver, class_name, site):
         print "Error: %s failed to display %s class properly." % (site,
                 class_name)
         print e
-        instance.end()
-        sys.exit(2)
 
 def check_element(instance, driver, site, width, element, dimension, large,
         small):
@@ -101,8 +97,6 @@ def check_element(instance, driver, site, width, element, dimension, large,
     except Exception as e:
         print "Error %s failed to check %s" % (site, element)
         print e
-        instance.end()
-        sys.exit(2)
 
 class Test():
     driver = None
