@@ -112,7 +112,6 @@ class Test():
             self.driver.quit()
         if driver == "chrome":
             chromedriver = "./chromedriver"
-            os.environ["webdriver.chrome.driver"] = chromedriver
             self.driver = webdriver.Chrome(chromedriver)
         if driver == "ie":
             self.driver = webdriver.Ie()
