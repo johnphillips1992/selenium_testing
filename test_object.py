@@ -59,7 +59,7 @@ STAGING_SITES = [
     "https://fablab-dev.arch.tamu.edu",
     "https://vizeval-dev.arch.tamu.edu",
     "https://coastalatlas-dev.arch.tamu.edu",
-    "https://grandchallenge-dev.tamu.edu"
+    "https://grandchallenge-dev.tamu.edu",
     "https://asc2015-dev.arch.tamu.edu",
     "https://research-dev.arch.tamu.edu",
     "https://faculty-dev.arch.tamu.edu"
