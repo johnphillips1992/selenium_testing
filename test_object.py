@@ -33,9 +33,9 @@ PRODUCTION_SITES = [
     "http://vizeval.arch.tamu.edu",
     "http://coastalatlas.arch.tamu.edu",
     "http://grandchallenge.tamu.edu",
-    "http://asc2015.arch.tamu.edu",
+    "http://asc2015.tamu.edu",
     "http://research.arch.tamu.edu",
-    "http://faculty-new.arch.tamu.edu"
+    "http://faculty.arch.tamu.edu"
 ]
 
 STAGING_SITES = [
